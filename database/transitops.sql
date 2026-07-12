@@ -445,6 +445,9 @@ END$$
 DELIMITER ;
 CALL sp_seed_demo_data();
 
+-- Authentication audit fields used by the hardened PHP session and login layer.
+ALTER TABLE login_logs ADD COLUMN browser VARCHAR(255) NULL AFTER ip_address, ADD COLUMN login_at DATETIME NULL AFTER success, ADD COLUMN logout_at DATETIME NULL AFTER login_at, ADD INDEX idx_login_ip_time (ip_address, created_at);
+
 CREATE OR REPLACE VIEW vw_dashboard AS SELECT (SELECT COUNT(*) FROM vehicles WHERE status='Available' AND deleted_at IS NULL) active_vehicles,(SELECT COUNT(*) FROM drivers WHERE status='Available' AND deleted_at IS NULL) drivers_available,(SELECT COUNT(*) FROM trips WHERE status='Dispatched' AND deleted_at IS NULL) trips_running,(SELECT COUNT(*) FROM trips WHERE status='Completed' AND deleted_at IS NULL) trips_completed,(SELECT COUNT(*) FROM maintenance_logs WHERE status IN ('Pending','In Progress') AND deleted_at IS NULL) vehicles_in_maintenance;
 CREATE OR REPLACE VIEW vw_vehicle_summary AS SELECT v.id,v.uuid,v.registration_number,COALESCE(v.vehicle_name,CONCAT(v.make,' ',v.model)) vehicle_name,v.status,r.name region,COUNT(t.id) trip_count FROM vehicles v JOIN regions r ON r.id=v.region_id LEFT JOIN trips t ON t.vehicle_id=v.id AND t.deleted_at IS NULL WHERE v.deleted_at IS NULL GROUP BY v.id;
 CREATE OR REPLACE VIEW vw_driver_summary AS SELECT d.id,d.uuid,d.full_name,d.license_number,d.license_expiry,d.status,r.name region,COUNT(t.id) trip_count FROM drivers d JOIN regions r ON r.id=d.region_id LEFT JOIN trips t ON t.driver_id=d.id AND t.deleted_at IS NULL WHERE d.deleted_at IS NULL GROUP BY d.id;

@@ -16,7 +16,7 @@ $navItems = [
     <div class="sidebar-user"><div class="avatar"><?= e(strtoupper(substr((string)($user['full_name'] ?? 'A'), 0, 1))) ?></div><div><strong><?= e((string)($user['full_name'] ?? 'Account')) ?></strong><small><?= e((string)($user['role'] ?? 'User')) ?></small></div></div>
     <nav class="sidebar-nav">
         <p class="sidebar-section">Operations</p>
-        <?php foreach ($navItems as [$href, $label, $icon]): $active = str_contains($path, trim($href, '/')); ?>
+        <?php foreach ($navItems as [$href, $label, $icon]): $module = $href === 'dashboard.php' ? 'dashboard' : explode('/', trim($href, '/'))[1]; if (!canAccess($module)) continue; $active = str_contains($path, trim($href, '/')); ?>
         <a href="<?= e(siteUrl($href . (str_ends_with($href, '/') ? 'index.php' : '')) ) ?>" class="nav-link<?= $active ? ' active' : '' ?>"><i class="fa <?= e($icon) ?>" aria-hidden="true"></i><span><?= e($label) ?></span></a>
         <?php endforeach; ?>
         <?php if (isAdmin()): ?><p class="sidebar-section">Administration</p>

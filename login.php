@@ -13,24 +13,11 @@ if (currentUser()) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
     $password = (string)($_POST['password'] ?? '');
-
-    if ($email === '' || $password === '') {
-        setFlash('danger', 'Email and password are required.');
-        redirect('login.php');
-    }
-
-    $stmt = getDb()->prepare('SELECT id, full_name, email, password_hash, role, status FROM users WHERE email = ? LIMIT 1');
-    $stmt->execute([$email]);
-    $user = $stmt->fetch();
-
-    if ($user && password_verify($password, $user['password_hash']) && $user['status'] === 'Active') {
-        loginUser($user);
-        regenerateSession();
-        setFlash('success', 'Welcome back!');
-        redirect('dashboard.php');
-    }
-
-    setFlash('danger', 'Invalid credentials.');
+    if (!verifyCsrfToken((string)($_POST['csrf_token'] ?? ''))) { setFlash('danger', 'Your form session expired. Please try again.'); redirect('login.php'); }
+    if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL) || $password === '') { setFlash('danger', 'Enter a valid email and password.'); redirect('login.php'); }
+    [$authenticated, $message] = authenticateCredentials($email, $password, !empty($_POST['remember_me']));
+    if ($authenticated) { setFlash('success', $message); redirect('dashboard.php'); }
+    setFlash('danger', $message);
     redirect('login.php');
 }
 
@@ -48,8 +35,9 @@ require_once __DIR__ . '/includes/header.php';
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <div class="password-field"><input type="password" id="password" name="password" autocomplete="current-password" required><button class="password-toggle" type="button" data-password-toggle="password" aria-label="Show password"><i class="fa fa-eye"></i></button></div>
             </div>
+            <div class="auth-options"><label><input type="checkbox" name="remember_me" value="1"> Remember me for 30 days</label><a href="forgot_password.php">Forgot password?</a></div>
             <button type="submit" class="btn btn-primary">Sign In</button>
         </form>
     </div>

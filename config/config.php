@@ -47,6 +47,7 @@ require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/roles.php';
 require_once __DIR__ . '/permissions.php';
 require_once __DIR__ . '/middleware.php';
+require_once __DIR__ . '/mail.php';
 require_once __DIR__ . '/validation.php';
 require_once __DIR__ . '/security.php';
 require_once __DIR__ . '/error_handler.php';
