@@ -7,7 +7,9 @@
 declare(strict_types=1);
 
 if (session_status() === PHP_SESSION_NONE) {
+    $isHttps = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off');
     session_name('transitops_session');
+    session_set_cookie_params(['lifetime' => 0, 'path' => '/', 'secure' => $isHttps, 'httponly' => true, 'samesite' => 'Lax']);
     session_start();
 }
 
@@ -45,6 +47,10 @@ require_once __DIR__ . '/auth.php';
 require_once __DIR__ . '/roles.php';
 require_once __DIR__ . '/permissions.php';
 require_once __DIR__ . '/middleware.php';
+require_once __DIR__ . '/validation.php';
+require_once __DIR__ . '/security.php';
+require_once __DIR__ . '/error_handler.php';
+require_once __DIR__ . '/functions.php';
 
 $__db = null;
 try {
@@ -55,4 +61,7 @@ try {
 
 if ($__db instanceof PDO) {
     $GLOBALS['pdo'] = $__db;
+    attemptRememberedLogin();
 }
+
+enforceSessionSecurity();

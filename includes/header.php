@@ -13,7 +13,8 @@ $flash = getFlash();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo e(APP_NAME); ?></title>
+    <title><?php echo e(($pageTitle ?? APP_NAME) . ' | ' . APP_NAME); ?></title>
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/variables.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/style.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/dashboard.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/sidebar.css')); ?>">
@@ -25,10 +26,19 @@ $flash = getFlash();
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/responsive.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/dark-theme.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/utilities.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/alerts.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/buttons.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/badges.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/modals.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/login.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/profile.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/settings.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/reports.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/icons/font-awesome.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/icons/material-icons.css')); ?>">
 </head>
 <body>
+<?php require __DIR__ . '/loader.php'; ?>
 <?php if ($flash): ?>
 <div class="flash-message flash-<?php echo e($flash['type']); ?>"><?php echo e($flash['message']); ?></div>
 <?php endif; ?>

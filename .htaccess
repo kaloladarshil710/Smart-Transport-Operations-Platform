@@ -1,0 +1,14 @@
+# TransitOps Apache hardening and front-door routing configuration.
+Options -Indexes
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+RewriteRule ^$ index.php [L]
+
+<FilesMatch "\.(sql|log|ini)$">
+    Require all denied
+</FilesMatch>
+<FilesMatch "^(config|composer)\.php$">
+    Require all denied
+</FilesMatch>

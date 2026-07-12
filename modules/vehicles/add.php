@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $type = (int)($_POST['vehicle_type_id'] ?? 0);
     $capacity = (int)($_POST['capacity_kg'] ?? 0);
     $region = (int)($_POST['region_id'] ?? 0);
-    $status = trim($_POST['status'] ?? 'Active');
+    $status = trim($_POST['status'] ?? 'Available');
 
     if ($registration === '' || $make === '' || $model === '' || $year === 0 || $type === 0 || $capacity === 0 || $region === 0) {
         setFlash('danger', 'All fields are required.');
@@ -66,7 +66,7 @@ require_once __DIR__ . '/../../includes/sidebar.php';
                 <div class="form-group"><label>Region</label><select name="region_id" required>
                     <?php foreach ($regions as $region): ?><option value="<?php echo e((string)$region['id']); ?>"><?php echo e($region['name']); ?></option><?php endforeach; ?>
                 </select></div>
-                <div class="form-group"><label>Status</label><select name="status"><option>Active</option><option>In Shop</option><option>Retired</option></select></div>
+                <div class="form-group"><label>Status</label><select name="status"><option>Available</option><option>In Shop</option><option>Retired</option></select></div>
             </div>
             <div class="form-actions">
                 <button class="btn btn-primary" type="submit">Save Vehicle</button>

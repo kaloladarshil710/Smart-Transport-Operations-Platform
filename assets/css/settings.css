@@ -1,0 +1,2 @@
+/** Settings section panels. */
+.settings-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }.settings-nav a { border-radius: 9px; color: var(--muted); padding: 9px 12px; }.settings-nav a:hover, .settings-nav a.active { background: #eff6ff; color: var(--primary); }

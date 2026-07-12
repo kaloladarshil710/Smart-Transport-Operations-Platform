@@ -13,6 +13,12 @@ function generateCsrfToken(): string
     return $_SESSION['csrf_token'];
 }
 
+/** Returns the current session CSRF token for forms. */
+function csrfToken(): string
+{
+    return generateCsrfToken();
+}
+
 function verifyCsrfToken(string $token): bool
 {
     return hash_equals($_SESSION['csrf_token'] ?? '', $token);

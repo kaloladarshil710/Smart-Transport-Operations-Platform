@@ -1,13 +1,5 @@
-.mobile-menu { display: none; }
-@media (max-width: 1100px) {
-  .dashboard-grid, .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .grid-3, .grid-2, .form-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 768px) {
-  .wrapper { flex-direction: column; }
-  .sidebar { width: 100%; display: none; }
-  .main-content { padding: 16px; }
-  .topbar { flex-direction: column; align-items: stretch; gap: 12px; }
-  .searchbox { min-width: 0; width: 100%; }
-  .dashboard-grid { grid-template-columns: 1fr; }
-}
+/** Application breakpoints: desktop, laptop, tablet and mobile. */
+@media (max-width: 1200px) { .main-content { padding: 24px; }.dashboard-grid, .grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); }.searchbox { min-width: 230px; } }
+@media (max-width: 992px) { .sidebar { transform: translateX(-100%); }.main-content, body.sidebar-collapsed .main-content { margin-left: 0; }.sidebar.is-open { box-shadow: 20px 0 50px rgb(15 23 42 / .25); transform: translateX(0); }.grid-3 { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 768px) { .main-content { padding: 16px; }.topbar { border-radius: 12px; height: auto; min-height: 62px; padding: 10px; top: 8px; }.searchbox { min-width: 0; }.profile-pill > div:not(.avatar) { display: none; }.page-heading { align-items: stretch; flex-direction: column; }.dashboard-grid, .grid-2, .grid-3, .grid-4, .form-grid { grid-template-columns: 1fr; }.page-title { font-size: 24px; }.table-card, .dashboard-card, .chart-card { padding: 16px; } }
+@media (max-width: 480px) { .topbar-right .icon-button { display: none; }.searchbox { width: calc(100vw - 150px); }.form-actions { flex-direction: column; }.form-actions .btn { width: 100%; } }

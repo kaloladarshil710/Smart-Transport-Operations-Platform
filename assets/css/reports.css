@@ -1,0 +1,2 @@
+/** Report filters and printable on-screen report layout. */
+.report-toolbar { align-items: center; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; margin-bottom: 20px; }.report-metric { border-left: 3px solid var(--primary); padding-left: 12px; }.report-metric small { color: var(--muted); display: block; }

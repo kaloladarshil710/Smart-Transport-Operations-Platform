@@ -1,0 +1,2 @@
+/** Focused enterprise sign-in experience. */
+.auth-shell { align-items: center; background: radial-gradient(circle at 15% 10%, #dbeafe 0, transparent 30%), radial-gradient(circle at 90% 90%, #e0e7ff 0, transparent 28%), var(--page); display: flex; justify-content: center; min-height: 100vh; padding: 24px; }.auth-card { max-width: 430px; padding: 34px; width: 100%; }.auth-card h2 { font-size: 24px; letter-spacing: -.02em; margin: 0 0 8px; }.auth-card > p { color: var(--muted); margin: 0 0 26px; }.auth-card .btn { margin-top: 8px; width: 100%; }
