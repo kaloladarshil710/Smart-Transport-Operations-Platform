@@ -21,12 +21,15 @@ function isLoginRateLimited(string $email): bool
 function authenticateCredentials(string $email, string $password, bool $remember = false): array
 {
     if (isLoginRateLimited($email)) { return [false, 'Too many failed attempts. Please try again in 15 minutes.']; }
-    $statement = getDb()->prepare('SELECT id, full_name, email, password_hash, role, status, phone, avatar_path FROM users WHERE email=? AND deleted_at IS NULL LIMIT 1');
+    $statement = getDb()->prepare('SELECT id, full_name, email, password_hash, role, status, phone, avatar_path, approval_status, is_active, rejection_reason FROM users WHERE email=? AND deleted_at IS NULL LIMIT 1');
     $statement->execute([$email]); $user = $statement->fetch();
-    if (!$user || !password_verify($password, $user['password_hash']) || $user['status'] !== 'Active') {
+    if (!$user || !password_verify($password, $user['password_hash'])) {
         recordLoginAttempt($user['id'] ?? null, false);
         return [false, 'Invalid email or password.'];
     }
+    if (($user['approval_status'] ?? 'Approved') === 'Pending') { recordLoginAttempt((int)$user['id'], false); return [false, 'Your account is awaiting approval from an Administrator or Fleet Manager.']; }
+    if (($user['approval_status'] ?? 'Approved') === 'Rejected') { recordLoginAttempt((int)$user['id'], false); return [false, 'Your registration request has been rejected. ' . ($user['rejection_reason'] ? 'Reason: '.$user['rejection_reason'] : '')]; }
+    if ($user['status'] !== 'Active' || !(bool)($user['is_active'] ?? true)) { recordLoginAttempt((int)$user['id'], false); return [false, 'Your account is not active. Please contact an administrator.']; }
     if (password_needs_rehash($user['password_hash'], PASSWORD_DEFAULT)) {
         getDb()->prepare('UPDATE users SET password_hash=? WHERE id=?')->execute([password_hash($password, PASSWORD_DEFAULT), $user['id']]);
     }

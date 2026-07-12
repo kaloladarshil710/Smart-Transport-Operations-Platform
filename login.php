@@ -39,6 +39,7 @@ require_once __DIR__ . '/includes/header.php';
             </div>
             <div class="auth-options"><label><input type="checkbox" name="remember_me" value="1"> Remember me for 30 days</label><a href="forgot_password.php">Forgot password?</a></div>
             <button type="submit" class="btn btn-primary">Sign In</button>
+            <a class="auth-link" href="signup.php">Request an account</a>
         </form>
     </div>
 </div>

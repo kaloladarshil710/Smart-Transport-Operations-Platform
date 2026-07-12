@@ -30,16 +30,53 @@ CREATE TABLE role_permissions (
 
 CREATE TABLE users (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  uuid CHAR(36) NULL UNIQUE,
   full_name VARCHAR(150) NOT NULL,
+  first_name VARCHAR(75) NULL,
+  last_name VARCHAR(75) NULL,
   email VARCHAR(150) NOT NULL UNIQUE,
+  phone VARCHAR(25) NULL,
+
   password_hash VARCHAR(255) NOT NULL,
   role VARCHAR(50) NOT NULL DEFAULT 'viewer',
+
+  -- Operational status
   status VARCHAR(20) NOT NULL DEFAULT 'Active',
+  is_active TINYINT(1) NOT NULL DEFAULT 1,
+
   last_login TIMESTAMP NULL DEFAULT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  -- Registration approval workflow
+  approval_status VARCHAR(20) NOT NULL DEFAULT 'Pending', -- Pending | Approved | Rejected
+  approved_by INT UNSIGNED NULL,
+  approved_at TIMESTAMP NULL DEFAULT NULL,
+  rejected_by INT UNSIGNED NULL,
+  rejected_at TIMESTAMP NULL DEFAULT NULL,
+  rejection_reason VARCHAR(255) NULL,
+
+  -- Optional profile/address metadata
+  employee_id VARCHAR(50) NULL UNIQUE,
+  department VARCHAR(100) NULL,
+  avatar_path VARCHAR(255) NULL,
+  address TEXT NULL,
+  city VARCHAR(100) NULL,
+  state VARCHAR(100) NULL,
+  country VARCHAR(100) NOT NULL DEFAULT 'India',
+
+  -- Remember-me token
+  remember_token CHAR(64) NULL,
+
+  -- Soft-delete support (used by auth queries)
+  deleted_at TIMESTAMP NULL,
+
   INDEX idx_users_role (role),
-  INDEX idx_users_status (status)
+  INDEX idx_users_status (status),
+  INDEX idx_users_approval_status (approval_status, is_active),
+
+  CONSTRAINT fk_users_approved_by FOREIGN KEY (approved_by) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL,
+  CONSTRAINT fk_users_rejected_by FOREIGN KEY (rejected_by) REFERENCES users(id) ON UPDATE CASCADE ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE user_roles (

@@ -19,7 +19,9 @@ $navItems = [
         <?php foreach ($navItems as [$href, $label, $icon]): $module = $href === 'dashboard.php' ? 'dashboard' : explode('/', trim($href, '/'))[1]; if (!canAccess($module)) continue; $active = str_contains($path, trim($href, '/')); ?>
         <a href="<?= e(siteUrl($href . (str_ends_with($href, '/') ? 'index.php' : '')) ) ?>" class="nav-link<?= $active ? ' active' : '' ?>"><i class="fa <?= e($icon) ?>" aria-hidden="true"></i><span><?= e($label) ?></span></a>
         <?php endforeach; ?>
-        <?php if (isAdmin()): ?><p class="sidebar-section">Administration</p>
+        <?php if (in_array($user['role'] ?? '', ['admin','fleet_manager'], true)): ?><p class="sidebar-section">Administration</p>
+        <a href="<?= e(siteUrl('modules/users/approvals.php')) ?>" class="nav-link<?= str_contains($path, '/users/approvals') ? ' active' : '' ?>"><i class="fa fa-user-check" aria-hidden="true"></i><span>User Approval</span></a>
+        <?php endif; ?><?php if (isAdmin()): ?>
         <a href="<?= e(siteUrl('modules/users/index.php')) ?>" class="nav-link<?= str_contains($path, '/users/') ? ' active' : '' ?>"><i class="fa fa-users" aria-hidden="true"></i><span>Users</span></a>
         <a href="<?= e(siteUrl('modules/settings/index.php')) ?>" class="nav-link<?= str_contains($path, '/settings/') ? ' active' : '' ?>"><i class="fa fa-cog" aria-hidden="true"></i><span>Settings</span></a><?php endif; ?>
     </nav>
