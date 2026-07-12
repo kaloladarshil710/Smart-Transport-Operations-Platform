@@ -23,3 +23,16 @@ function verifyCsrfToken(string $token): bool
 {
     return hash_equals($_SESSION['csrf_token'] ?? '', $token);
 }
+
+/**
+ * Enforce CSRF validation for POST requests.
+ *
+ * Exits via jsonResponse() on failure.
+ */
+function requireCsrfFromPost(): void
+{
+    $token = (string)($_POST['csrf_token'] ?? '');
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST' || empty($token) || !verifyCsrfToken($token)) {
+        jsonResponse(['ok' => false, 'message' => 'Invalid CSRF token.'], 400);
+    }
+}

@@ -1,5 +1,7 @@
 # TransitOps - Vehicle Module TODO
 
+- [x] Step 0: Module 01 Project Setup foundations (CSRF helper + AJAX CSRF enforcement normalization)
+
 - [ ] Step 1: Create enterprise vehicle helpers
   - [ ] functions/vehicle_functions.php
   - [ ] functions/validation_functions.php (vehicle-specific validation helpers)

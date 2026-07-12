@@ -735,15 +735,3 @@ window.__DASHBOARD_DATA__ = {
 };
 </script>
 <?php require_once __DIR__ . '/includes/footer.php'; ?>
-</write_to_file>
-<task_progress>
-- [x] Create database dashboard views
-- [x] Create dashboard functions
-- [x] Create AJAX endpoint
-- [x] Rewrite main dashboard page
-- [ ] Rewrite dashboard CSS
-- [ ] Rewrite dashboard JS
-- [ ] Rewrite charts JS
-- [ ] Test implementation
-</task_progress>
-</write_to_file>
