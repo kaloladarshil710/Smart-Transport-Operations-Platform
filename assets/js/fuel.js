@@ -1,0 +1,2 @@
+/** Live fuel total preview; authoritative calculation remains server-side. */
+document.addEventListener('input',event=>{if(!event.target.matches('[data-fuel-liters],[data-fuel-price]'))return;const liters=Number(document.querySelector('[data-fuel-liters]')?.value||0);const price=Number(document.querySelector('[data-fuel-price]')?.value||0);const total=document.querySelector('[data-fuel-total]');if(total)total.textContent=(liters*price).toFixed(2);});

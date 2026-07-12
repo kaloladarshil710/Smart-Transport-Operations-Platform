@@ -34,6 +34,17 @@ $flash = getFlash();
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/profile.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/settings.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/reports.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/trip.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/driver.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/driver-table.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/driver-form.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/driver-profile.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/fuel.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/fuel-table.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/fuel-form.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/expense.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/expense-table.css')); ?>">
+    <link rel="stylesheet" href="<?php echo e(siteUrl('assets/css/expense-form.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/icons/font-awesome.min.css')); ?>">
     <link rel="stylesheet" href="<?php echo e(siteUrl('assets/icons/material-icons.css')); ?>">
 </head>

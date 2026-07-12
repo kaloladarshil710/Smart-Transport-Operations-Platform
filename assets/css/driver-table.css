@@ -1,0 +1,2 @@
+/** Dense data-table refinements for driver operational data. */
+.driver-table td { vertical-align: middle; }.driver-table th:last-child,.driver-table td:last-child { text-align: right; }@media(max-width:768px){.driver-toolbar>*{flex:1 1 45%;}.driver-toolbar .searchbar{flex-basis:100%;}.driver-toolbar .searchbar input{width:100%;}.driver-table{min-width:900px;}}

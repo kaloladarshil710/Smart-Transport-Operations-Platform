@@ -1,0 +1,3 @@
+<?php
+/** Fuel transaction validation. */
+declare(strict_types=1);function validateFuelInput(array $input):array{$e=[];if((int)($input['vehicle_id']??0)<1)$e['vehicle_id']='Select a vehicle.';if((float)($input['quantity_liters']??0)<=0)$e['quantity_liters']='Liters must be greater than zero.';if((float)($input['price_per_liter']??0)<0)$e['price_per_liter']='Price cannot be negative.';if(empty($input['logged_date'])||strtotime((string)$input['logged_date'])>strtotime('today'))$e['logged_date']='Fuel date cannot be in the future.';if(!in_array((string)($input['fuel_type']??''),['Petrol','Diesel','CNG','Electric','Hybrid'],true))$e['fuel_type']='Select a fuel type.';return $e;}

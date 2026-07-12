@@ -1,73 +1,7 @@
 <?php
-/**
- * Add driver form.
- */
+/** Driver onboarding form with compliance and emergency-contact data. */
 declare(strict_types=1);
-
-require_once __DIR__ . '/../../config/config.php';
-requireAuth();
-enforceModuleAccess('drivers');
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (!verifyCsrfToken($_POST['csrf_token'] ?? '')) {
-        setFlash('danger', 'Invalid CSRF token.');
-        redirect('modules/drivers/add.php');
-    }
-
-    $name = trim($_POST['full_name'] ?? '');
-    $email = trim($_POST['email'] ?? '');
-    $phone = trim($_POST['phone'] ?? '');
-    $license = trim($_POST['license_number'] ?? '');
-    $expiry = trim($_POST['license_expiry'] ?? '');
-    $region = (int)($_POST['region_id'] ?? 0);
-    $status = trim($_POST['status'] ?? 'Available');
-
-    if ($name === '' || $email === '' || $phone === '' || $license === '' || $expiry === '' || $region === 0) {
-        setFlash('danger', 'All fields are required.');
-        redirect('modules/drivers/add.php');
-    }
-
-    $stmt = getDb()->prepare('SELECT id FROM drivers WHERE email = ? OR license_number = ? LIMIT 1');
-    $stmt->execute([$email, $license]);
-    if ($stmt->fetch()) {
-        setFlash('danger', 'Driver email or license number already exists.');
-        redirect('modules/drivers/add.php');
-    }
-
-    $insert = getDb()->prepare('INSERT INTO drivers (full_name, email, phone, license_number, license_expiry, status, region_id) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    $insert->execute([$name, $email, $phone, $license, $expiry, $status, $region]);
-    setFlash('success', 'Driver created successfully.');
-    redirect('modules/drivers/index.php');
-}
-
-$regions = getDb()->query('SELECT id, name FROM regions ORDER BY name')->fetchAll();
-
-require_once __DIR__ . '/../../includes/header.php';
-require_once __DIR__ . '/../../includes/sidebar.php';
+require_once __DIR__.'/../../config/config.php';require_once ROOT_PATH.'/functions/driver_functions.php';requireAuth();enforceModuleAccess('drivers');
+if($_SERVER['REQUEST_METHOD']==='POST'){if(!verifyCsrfToken((string)($_POST['csrf_token']??''))){setFlash('danger','Invalid form token.');redirect('modules/drivers/add.php');}[$ok,$result]=saveDriver($_POST);if(!$ok){$_SESSION['driver_errors']=$result;$_SESSION['driver_input']=$_POST;redirect('modules/drivers/add.php');}notifyDriverCompliance(getDriverById((int)$result));setFlash('success','Driver created successfully.');redirect('modules/drivers/view.php?id='.$result);}$input=$_SESSION['driver_input']??[];$errors=$_SESSION['driver_errors']??[];unset($_SESSION['driver_input'],$_SESSION['driver_errors']);$regions=getDb()->query('SELECT id,name FROM regions WHERE status="Active" ORDER BY name')->fetchAll();$pageTitle='Add driver';require ROOT_PATH.'/includes/header.php';require ROOT_PATH.'/includes/sidebar.php';
 ?>
-<div class="main-content">
-    <?php require_once __DIR__ . '/../../includes/navbar.php'; ?>
-    <h1 class="page-title">Add Driver</h1>
-    <p class="page-subtitle">Register a licensed driver and assign operating region.</p>
-    <div class="card dashboard-card">
-        <form method="post" action="add.php" data-validate="true">
-            <input type="hidden" name="csrf_token" value="<?php echo e(generateCsrfToken()); ?>">
-            <div class="form-grid">
-                <div class="form-group"><label>Full Name</label><input name="full_name" required></div>
-                <div class="form-group"><label>Email</label><input type="email" name="email" required></div>
-                <div class="form-group"><label>Phone</label><input name="phone" required></div>
-                <div class="form-group"><label>License Number</label><input name="license_number" required></div>
-                <div class="form-group"><label>License Expiry</label><input type="date" name="license_expiry" required></div>
-                <div class="form-group"><label>Region</label><select name="region_id" required>
-                    <?php foreach ($regions as $region): ?><option value="<?php echo e((string)$region['id']); ?>"><?php echo e($region['name']); ?></option><?php endforeach; ?>
-                </select></div>
-                <div class="form-group"><label>Status</label><select name="status"><option>Available</option><option>On Trip</option><option>Suspended</option></select></div>
-            </div>
-            <div class="form-actions">
-                <button class="btn btn-primary" type="submit">Save Driver</button>
-                <a class="btn btn-secondary" href="index.php">Cancel</a>
-            </div>
-        </form>
-    </div>
-</div>
-<?php require_once __DIR__ . '/../../includes/footer.php'; ?>
+<main class="main-content driver-module"><?php require ROOT_PATH.'/includes/navbar.php';?><section class="page-heading page-section"><div><h1 class="page-title">Add driver</h1><p class="page-subtitle">Create a compliant driver profile ready for dispatch operations.</p></div><a class="btn btn-secondary" href="index.php">Back to drivers</a></section><form class="card dashboard-card driver-form" method="post" data-validate="true"><input type="hidden" name="csrf_token" value="<?=e(csrfToken())?>"><h2>Identity and contact</h2><div class="form-grid"><?php foreach(['full_name'=>'Full name','employee_id'=>'Employee ID','email'=>'Email address','phone'=>'Phone number','date_of_birth'=>'Date of birth','joining_date'=>'Joining date'] as $name=>$label):?><div class="form-group"><label><?=e($label)?></label><input name="<?=$name?>" type="<?=str_contains($name,'date')?'date':($name==='email'?'email':'text')?>" value="<?=e((string)($input[$name]??''))?>" <?=in_array($name,['full_name','email','phone'],true)?'required':''?>><small class="field-error"><?=e($errors[$name]??'')?></small></div><?php endforeach;?></div><h2>License and safety</h2><div class="form-grid"><?php foreach(['license_number'=>'License number','license_category'=>'License category','license_issue_date'=>'License issue date','license_expiry'=>'License expiry','experience_years'=>'Experience (years)','safety_score'=>'Safety score'] as $name=>$label):?><div class="form-group"><label><?=e($label)?></label><input name="<?=$name?>" type="<?=str_contains($name,'date')?'date':($name==='experience_years'||$name==='safety_score'?'number':'text')?>" value="<?=e((string)($input[$name]??($name==='safety_score'?'100':'')))?>" <?=in_array($name,['license_number','license_expiry'],true)?'required':''?>><small class="field-error"><?=e($errors[$name]??'')?></small></div><?php endforeach;?></div><h2>Operational and emergency details</h2><div class="form-grid"><div class="form-group"><label>Region</label><select name="region_id" required><?php foreach($regions as $region):?><option value="<?=$region['id']?>"><?=e($region['name'])?></option><?php endforeach;?></select></div><div class="form-group"><label>Status</label><select name="status"><option>Available</option><option>Off Duty</option><option>Inactive</option></select></div><div class="form-group"><label>Blood group</label><input name="blood_group" value="<?=e((string)($input['blood_group']??''))?>"></div><div class="form-group"><label>Emergency contact</label><input name="emergency_contact" value="<?=e((string)($input['emergency_contact']??''))?>"></div><div class="form-group"><label>Medical certificate expiry</label><input name="medical_certificate_expiry" type="date"></div><div class="form-group"><label>Police verification date</label><input name="police_verification_date" type="date"></div></div><div class="form-group"><label>Remarks</label><textarea name="remarks"><?=e((string)($input['remarks']??''))?></textarea></div><div class="form-actions"><button class="btn btn-primary">Save driver</button><a class="btn btn-secondary" href="index.php">Cancel</a></div></form></main><?php require ROOT_PATH.'/includes/footer.php';?>

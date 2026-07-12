@@ -1,0 +1,4 @@
+<?php
+/** Maintenance input validation and lifecycle guards. */
+declare(strict_types=1);
+function validateMaintenanceInput(array $input): array { $errors=[]; if((int)($input['vehicle_id']??0)<1)$errors['vehicle_id']='Select a vehicle.';if(trim((string)($input['description']??''))==='')$errors['description']='Description is required.';if(!in_array((string)($input['maintenance_type']??''),['Oil Change','Engine Service','Brake Service','Tyre Replacement','Battery Replacement','Insurance Renewal','Fitness Renewal','General Service','Emergency Repair','Custom'],true))$errors['maintenance_type']='Select a maintenance type.';if((float)($input['estimated_cost']??0)<0)$errors['estimated_cost']='Cost cannot be negative.';if(empty($input['scheduled_date'])||strtotime((string)$input['scheduled_date'])===false)$errors['scheduled_date']='Enter a valid scheduled date.';return $errors; }

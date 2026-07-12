@@ -1,0 +1,3 @@
+<?php
+/** Vehicle ROI calculation. */
+declare(strict_types=1);function vehicleRoi(int $vehicleId):array{$s=getDb()->prepare('SELECT v.purchase_cost,COALESCE(SUM(t.revenue),0) revenue,(SELECT COALESCE(SUM(cost),0) FROM fuel_logs WHERE vehicle_id=v.id) fuel_cost,(SELECT COALESCE(SUM(amount),0) FROM expenses WHERE vehicle_id=v.id) expense_cost FROM vehicles v LEFT JOIN trips t ON t.vehicle_id=v.id AND t.status="Completed" WHERE v.id=? GROUP BY v.id');$s->execute([$vehicleId]);$r=$s->fetch()?:[];$cost=(float)($r['fuel_cost']??0)+(float)($r['expense_cost']??0);$r['roi']=((float)($r['revenue']??0)-$cost)/max(1,(float)($r['purchase_cost']??0))*100;return $r;}

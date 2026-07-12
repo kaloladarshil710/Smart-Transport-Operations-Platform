@@ -1,0 +1,1 @@
+<?php /** Expense export/report route. */ declare(strict_types=1); require_once __DIR__.'/../../config/config.php'; requireAuth(); enforceModuleAccess('expenses'); redirect('ajax/expense_export.php');

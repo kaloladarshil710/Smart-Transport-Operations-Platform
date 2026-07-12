@@ -1,0 +1,3 @@
+<?php
+/** Expense transaction validation. */
+declare(strict_types=1);function validateExpenseInput(array $input):array{$e=[];if(trim((string)($input['title']??''))==='')$e['title']='Title is required.';if((float)($input['amount']??0)<=0)$e['amount']='Amount must be greater than zero.';if(empty($input['expense_date'])||strtotime((string)$input['expense_date'])>strtotime('today'))$e['expense_date']='Expense date cannot be in the future.';if(!empty($input['trip_id'])){$s=getDb()->prepare('SELECT 1 FROM trips WHERE id=? AND status="Dispatched"');$s->execute([(int)$input['trip_id']]);if(!$s->fetch())$e['trip_id']='Trip expenses require an active dispatched trip.';}return $e;}

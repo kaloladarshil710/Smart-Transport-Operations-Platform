@@ -1,0 +1,3 @@
+<?php
+/** CSV export for authorized driver-management users. */
+declare(strict_types=1);require_once __DIR__.'/../config/config.php';requireAuth();enforceModuleAccess('drivers');header('Content-Type: text/csv; charset=utf-8');header('Content-Disposition: attachment; filename="transitops-drivers.csv"');$out=fopen('php://output','w');fputcsv($out,['Employee ID','Driver','Email','Phone','License','Expiry','Status','Safety Score']);$query=getDb()->query('SELECT employee_id,full_name,email,phone,license_number,license_expiry,status,safety_score FROM drivers WHERE deleted_at IS NULL ORDER BY full_name');while($row=$query->fetch())fputcsv($out,$row);fclose($out);exit;

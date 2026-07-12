@@ -1,0 +1,2 @@
+/** Driver UI interaction helpers. */
+document.addEventListener('DOMContentLoaded',()=>document.querySelectorAll('[data-driver-status]').forEach(button=>button.addEventListener('click',()=>{const form=new FormData();form.append('id',button.dataset.driverId);form.append('status',button.dataset.driverStatus);form.append('csrf_token',document.querySelector('[name="csrf_token"]')?.value||'');fetch('../../ajax/driver_status.php',{method:'POST',body:form}).then(r=>r.json()).then(data=>{if(data.ok)location.reload();});})));

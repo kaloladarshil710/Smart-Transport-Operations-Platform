@@ -1,0 +1,2 @@
+/** Driver onboarding and edit forms. */
+.driver-form { max-width: 1120px; }.driver-form h2 { font-size: 15px; margin: 25px 0 14px; }.driver-form h2:first-of-type { margin-top: 0; }.field-error { color: var(--danger); font-size: 11px; min-height: 14px; }.driver-form input[type="number"] { width: 100%; }
