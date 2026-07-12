@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | TransitOps</title>
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/variables.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/style.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/dashboard.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/sidebar.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/navbar.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/cards.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/forms.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/tables.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/animations.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/responsive.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/dark-theme.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/utilities.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/alerts.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/buttons.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/badges.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/modals.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/login.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/profile.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/settings.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/reports.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/trip.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/driver.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/driver-table.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/driver-form.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/driver-profile.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/fuel.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/fuel-table.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/fuel-form.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/expense.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/expense-table.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/css/expense-form.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/icons/font-awesome.min.css">
+    <link rel="stylesheet" href="http://localhost/Smart-Transport-Operations-Platform/assets/icons/material-icons.css">
+</head>
+<body>
+<div id="page-loader" class="page-loader" role="status" aria-live="polite" hidden><span>Loading…</span></div>
+<div class="flash-message flash-success">Welcome back.</div>
+<aside class="sidebar" aria-label="Primary navigation">
+    <a class="sidebar-brand" href="http://localhost/Smart-Transport-Operations-Platform/dashboard.php" aria-label="TransitOps dashboard"><div class="brand-icon">T</div><div><h3>TransitOps</h3><p>Operations cloud</p></div></a>
+    <div class="sidebar-user"><div class="avatar">S</div><div><strong>System Administrator</strong><small>admin</small></div></div>
+    <nav class="sidebar-nav">
+        <p class="sidebar-section">Operations</p>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/dashboard.php" class="nav-link active"><i class="fa fa-home" aria-hidden="true"></i><span>Dashboard</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/vehicles/index.php" class="nav-link"><i class="fa fa-bus" aria-hidden="true"></i><span>Vehicles</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/drivers/index.php" class="nav-link"><i class="fa fa-user" aria-hidden="true"></i><span>Drivers</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/trips/index.php" class="nav-link"><i class="fa fa-route" aria-hidden="true"></i><span>Trips</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/maintenance/index.php" class="nav-link"><i class="fa fa-wrench" aria-hidden="true"></i><span>Maintenance</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/fuel/index.php" class="nav-link"><i class="fa fa-gas-pump" aria-hidden="true"></i><span>Fuel</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/expenses/index.php" class="nav-link"><i class="fa fa-wallet" aria-hidden="true"></i><span>Expenses</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/reports/index.php" class="nav-link"><i class="fa fa-file-alt" aria-hidden="true"></i><span>Reports</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/analytics/index.php" class="nav-link"><i class="fa fa-chart-line" aria-hidden="true"></i><span>Analytics</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/notifications/index.php" class="nav-link"><i class="fa fa-bell" aria-hidden="true"></i><span>Notifications</span></a>
+                <p class="sidebar-section">Administration</p>
+        <a href="http://localhost/Smart-Transport-Operations-Platform/modules/users/approvals.php" class="nav-link"><i class="fa fa-user-check" aria-hidden="true"></i><span>User Approval</span></a>
+                <a href="http://localhost/Smart-Transport-Operations-Platform/modules/users/index.php" class="nav-link"><i class="fa fa-users" aria-hidden="true"></i><span>Users</span></a>
+        <a href="http://localhost/Smart-Transport-Operations-Platform/modules/settings/index.php" class="nav-link"><i class="fa fa-cog" aria-hidden="true"></i><span>Settings</span></a>    </nav>
+</aside>
+<div class="main-content">
+    <header class="topbar">
+ <div class="topbar-left"><button class="sidebar-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false"><i class="fa fa-bars" aria-hidden="true"></i></button><form class="searchbox" method="get" action="http://localhost/Smart-Transport-Operations-Platform/modules/search/index.php" role="search"><i class="fa fa-search" aria-hidden="true"></i><label class="sr-only" for="global-search">Search TransitOps</label><input id="global-search" type="search" name="q" placeholder="Search vehicles, drivers, trips…"></form></div>
+ <div class="topbar-right"><button id="theme-toggle" class="icon-button" type="button" aria-label="Enable dark mode"><i class="fa fa-moon-o" aria-hidden="true"></i></button><a class="icon-button" href="http://localhost/Smart-Transport-Operations-Platform/modules/notifications/index.php" aria-label="View notifications"><i class="fa fa-bell" aria-hidden="true"></i><span class="notification-dot"></span></a><a class="profile-pill" href="http://localhost/Smart-Transport-Operations-Platform/modules/profile/index.php" aria-label="Open profile"><span class="avatar">S</span><span><strong>System Administrator</strong><p>admin</p></span></a></div>
+</header>
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+            <span aria-current="page">Dashboard</span>    </nav>
+
+    <!-- Dashboard Header -->
+    <section class="dashboard-header">
+        <div class="dashboard-header-left">
+            <h1 class="dashboard-title">Fleet Performance Dashboard</h1>
+            <p class="dashboard-subtitle">Real-time overview of your entire transport operations.</p>
+        </div>
+        <div class="dashboard-header-right">
+            <div class="dashboard-datetime">
+                <span id="current-date" class="current-date">Sunday, 12 July 2026</span>
+                <span id="current-time" class="current-time">16:27:21</span>
+            </div>
+            <div class="dashboard-welcome">
+                <span class="welcome-text">Welcome back,</span>
+                <span class="welcome-user">System Administrator</span>
+                <span class="welcome-role badge badge-role">Admin</span>
+            </div>
+            <div class="dashboard-actions">
+                <button type="button" class="btn btn-primary" onclick="window.location.href='modules/vehicles/add.php'"><i class="fa fa-plus"></i> Add Vehicle</button>
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='modules/drivers/add.php'"><i class="fa fa-user-plus"></i> Add Driver</button>
+                <button type="button" class="btn btn-accent" onclick="window.location.href='modules/trips/add.php'"><i class="fa fa-route"></i> Create Trip</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- KPI Cards Section -->
+        <section class="kpi-section page-section">
+        <div class="kpi-grid">
+            <!-- Total Vehicles -->
+            <div class="kpi-card" data-kpi="total_vehicles">
+                <div class="kpi-icon kpi-icon-vehicles"><i class="fa fa-bus"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Total Vehicles</span>
+                    <span class="kpi-value" id="kpi-total-vehicles">26</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> Fleet total</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-total-vehicles"></div>
+            </div>
+
+            <!-- Available Vehicles -->
+            <div class="kpi-card" data-kpi="available_vehicles">
+                <div class="kpi-icon kpi-icon-available"><i class="fa fa-check-circle"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Available Vehicles</span>
+                    <span class="kpi-value" id="kpi-available-vehicles">26</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> Ready to deploy</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-available-vehicles"></div>
+            </div>
+
+            <!-- Vehicles On Trip -->
+            <div class="kpi-card" data-kpi="vehicles_on_trip">
+                <div class="kpi-icon kpi-icon-trip"><i class="fa fa-route"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Vehicles On Trip</span>
+                    <span class="kpi-value" id="kpi-vehicles-on-trip">0</span>
+                    <span class="kpi-trend kpi-trend-info"><i class="fa fa-arrow-right"></i> In transit</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-vehicles-on-trip"></div>
+            </div>
+
+            <!-- Vehicles In Maintenance -->
+            <div class="kpi-card" data-kpi="vehicles_in_maintenance">
+                <div class="kpi-icon kpi-icon-maintenance"><i class="fa fa-wrench"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">In Maintenance</span>
+                    <span class="kpi-value" id="kpi-maintenance">0</span>
+                    <span class="kpi-trend kpi-trend-warning"><i class="fa fa-exclamation-triangle"></i> In shop</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-maintenance"></div>
+            </div>
+
+            <!-- Retired Vehicles -->
+            <div class="kpi-card" data-kpi="retired_vehicles">
+                <div class="kpi-icon kpi-icon-retired"><i class="fa fa-archive"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Retired Vehicles</span>
+                    <span class="kpi-value" id="kpi-retired">0</span>
+                    <span class="kpi-trend kpi-trend-muted"><i class="fa fa-minus"></i> Decommissioned</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-retired"></div>
+            </div>
+
+            <!-- Total Drivers -->
+            <div class="kpi-card" data-kpi="total_drivers">
+                <div class="kpi-icon kpi-icon-drivers"><i class="fa fa-users"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Total Drivers</span>
+                    <span class="kpi-value" id="kpi-total-drivers">30</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> Workforce</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-total-drivers"></div>
+            </div>
+
+            <!-- Available Drivers -->
+            <div class="kpi-card" data-kpi="available_drivers">
+                <div class="kpi-icon kpi-icon-avail-drivers"><i class="fa fa-user-check"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Available Drivers</span>
+                    <span class="kpi-value" id="kpi-available-drivers">30</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> Ready</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-available-drivers"></div>
+            </div>
+
+            <!-- Drivers On Trip -->
+            <div class="kpi-card" data-kpi="drivers_on_trip">
+                <div class="kpi-icon kpi-icon-drivers-trip"><i class="fa fa-user-tie"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Drivers On Trip</span>
+                    <span class="kpi-value" id="kpi-drivers-trip">0</span>
+                    <span class="kpi-trend kpi-trend-info"><i class="fa fa-arrow-right"></i> Driving</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-drivers-trip"></div>
+            </div>
+
+            <!-- Suspended Drivers -->
+            <div class="kpi-card" data-kpi="suspended_drivers">
+                <div class="kpi-icon kpi-icon-suspended"><i class="fa fa-ban"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Suspended Drivers</span>
+                    <span class="kpi-value" id="kpi-suspended">0</span>
+                    <span class="kpi-trend kpi-trend-down"><i class="fa fa-arrow-down"></i> Inactive</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-suspended"></div>
+            </div>
+
+            <!-- Trips Today -->
+            <div class="kpi-card" data-kpi="trips_today">
+                <div class="kpi-icon kpi-icon-trips"><i class="fa fa-calendar-day"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Trips Today</span>
+                    <span class="kpi-value" id="kpi-trips-today">0</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> New</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-trips-today"></div>
+            </div>
+
+            <!-- Active Trips -->
+            <div class="kpi-card" data-kpi="active_trips">
+                <div class="kpi-icon kpi-icon-active-trips"><i class="fa fa-spinner"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Active Trips</span>
+                    <span class="kpi-value" id="kpi-active-trips">10</span>
+                    <span class="kpi-trend kpi-trend-info"><i class="fa fa-play"></i> In progress</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-active-trips"></div>
+            </div>
+
+            <!-- Completed Trips -->
+            <div class="kpi-card" data-kpi="completed_trips">
+                <div class="kpi-icon kpi-icon-completed"><i class="fa fa-check-double"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Completed Trips</span>
+                    <span class="kpi-value" id="kpi-completed-trips">60</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-check-circle"></i> Delivered</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-completed-trips"></div>
+            </div>
+
+            <!-- Cancelled Trips -->
+            <div class="kpi-card" data-kpi="cancelled_trips">
+                <div class="kpi-icon kpi-icon-cancelled"><i class="fa fa-times-circle"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Cancelled Trips</span>
+                    <span class="kpi-value" id="kpi-cancelled-trips">10</span>
+                    <span class="kpi-trend kpi-trend-down"><i class="fa fa-arrow-down"></i> Cancelled</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-cancelled-trips"></div>
+            </div>
+
+            <!-- Fleet Utilization -->
+            <div class="kpi-card" data-kpi="fleet_utilization">
+                <div class="kpi-icon kpi-icon-utilization"><i class="fa fa-chart-pie"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Fleet Utilization</span>
+                    <span class="kpi-value" id="kpi-utilization">0.00%</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> Efficiency</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-utilization"></div>
+            </div>
+
+            <!-- Fuel Efficiency -->
+            <div class="kpi-card" data-kpi="fuel_efficiency">
+                <div class="kpi-icon kpi-icon-fuel-eff"><i class="fa fa-tachometer"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Fuel Efficiency</span>
+                    <span class="kpi-value" id="kpi-fuel-eff">7.94 <small>km/L</small></span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> Avg</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-fuel-eff"></div>
+            </div>
+
+            <!-- Fuel Cost -->
+            <div class="kpi-card" data-kpi="fuel_cost">
+                <div class="kpi-icon kpi-icon-fuel-cost"><i class="fa fa-gas-pump"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Fuel Cost (MTD)</span>
+                    <span class="kpi-value" id="kpi-fuel-cost">₹51,331.50</span>
+                    <span class="kpi-trend kpi-trend-warning"><i class="fa fa-arrow-down"></i> MTD</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-fuel-cost"></div>
+            </div>
+
+            <!-- Maintenance Cost -->
+            <div class="kpi-card" data-kpi="maintenance_cost">
+                <div class="kpi-icon kpi-icon-maint-cost"><i class="fa fa-tools"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Maintenance Cost (MTD)</span>
+                    <span class="kpi-value" id="kpi-maint-cost">₹3,350.00</span>
+                    <span class="kpi-trend kpi-trend-warning"><i class="fa fa-arrow-down"></i> MTD</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-maint-cost"></div>
+            </div>
+
+            <!-- Operational Cost -->
+            <div class="kpi-card" data-kpi="operational_cost">
+                <div class="kpi-icon kpi-icon-op-cost"><i class="fa fa-file-invoice-dollar"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Operational Cost (MTD)</span>
+                    <span class="kpi-value" id="kpi-op-cost">₹17,050.00</span>
+                    <span class="kpi-trend kpi-trend-warning"><i class="fa fa-arrow-down"></i> MTD</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-op-cost"></div>
+            </div>
+
+            <!-- Revenue -->
+            <div class="kpi-card" data-kpi="total_revenue">
+                <div class="kpi-icon kpi-icon-revenue"><i class="fa fa-money-bill-wave"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Total Revenue</span>
+                    <span class="kpi-value" id="kpi-revenue">₹1,417,500.00</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> All-time</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-revenue"></div>
+            </div>
+
+            <!-- Vehicle ROI -->
+            <div class="kpi-card" data-kpi="vehicle_roi">
+                <div class="kpi-icon kpi-icon-roi"><i class="fa fa-chart-line"></i></div>
+                <div class="kpi-content">
+                    <span class="kpi-title">Vehicle ROI</span>
+                    <span class="kpi-value" id="kpi-roi">2.84%</span>
+                    <span class="kpi-trend kpi-trend-up"><i class="fa fa-arrow-up"></i> Return</span>
+                </div>
+                <div class="kpi-mini-chart" id="mini-roi"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Status Panels Row -->
+    <div class="grid grid-4 page-section">
+                <!-- Vehicle Status Panel -->
+        <div class="card status-panel">
+            <div class="card-header">
+                <h3><i class="fa fa-bus"></i> Vehicle Status</h3>
+                <span class="card-badge">Live</span>
+            </div>
+            <div class="status-list" id="vehicle-status-list">
+                                <div class="status-item">
+                    <span class="status-indicator" style="background:#22c55e"></span>
+                    <i class="fa fa-check-circle" style="color:#22c55e"></i>
+                    <span class="status-label">Available</span>
+                    <span class="status-count">An unexpected error occurred. Please try again later.

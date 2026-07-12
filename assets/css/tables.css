@@ -1,2 +1,106 @@
 /** Responsive data tables with clear, enterprise-grade hierarchy. */
-.table-card { overflow: hidden; }.table-responsive { overflow-x: auto; } table { border-collapse: separate; border-spacing: 0; min-width: 680px; width: 100%; } th, td { border-bottom: 1px solid var(--border); padding: 15px 16px; text-align: left; white-space: nowrap; } thead th { background: #f8fafc; color: var(--muted); font-size: 10px; font-weight: 700; letter-spacing: .09em; position: sticky; text-transform: uppercase; top: 0; z-index: 1; } tbody tr { transition: background var(--transition); } tbody tr:nth-child(even) { background: rgb(248 250 252 / .55); } tbody tr:hover { background: #eff6ff; } tbody tr:last-child td { border-bottom: 0; }.badge { border-radius: 999px; display: inline-flex; font-size: 11px; font-weight: 700; line-height: 1; padding: 6px 9px; }.badge-success { background: #dcfce7; color: #15803d; }.badge-warning { background: #fef3c7; color: #b45309; }.badge-danger { background: #fee2e2; color: #b91c1c; }.badge-info { background: #e0f2fe; color: #0369a1; }.badge-secondary { background: #e2e8f0; color: #475569; }
+.table-card {
+    overflow: hidden;
+}
+
+.table-responsive {
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 72vh;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+    min-width: 0;
+    width: 100%;
+}
+
+th,
+td {
+    border-bottom: 1px solid var(--border);
+    padding: 10px 12px;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.35;
+}
+
+thead th {
+    background: #f8fafc;
+    color: var(--muted);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .08em;
+    padding: 9px 12px;
+    position: sticky;
+    text-transform: uppercase;
+    top: 0;
+    z-index: 1;
+}
+
+tbody tr {
+    transition: background var(--transition);
+}
+
+tbody tr:nth-child(even) {
+    background: rgb(248 250 252 / .55);
+}
+
+tbody tr:hover {
+    background: #eff6ff;
+}
+
+tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.badge {
+    border-radius: 999px;
+    display: inline-flex;
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+    padding: 6px 9px;
+}
+
+.badge-success {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-warning {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.badge-danger {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.badge-info {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.badge-secondary {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+.btn-sm i {
+    margin-right: 5px;
+}
+
+th:last-child,
+td:last-child {
+    text-align: center;
+    min-width: 120px;
+}

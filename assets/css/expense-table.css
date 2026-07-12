@@ -1,2 +1,4 @@
 /** Expense table responsiveness. */
-@media(max-width:768px){.expense-table{min-width:900px}}
+.expense-table {
+    min-width: 0;
+}

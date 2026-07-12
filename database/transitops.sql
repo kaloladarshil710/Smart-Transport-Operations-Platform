@@ -338,8 +338,8 @@ SELECT r.id, p.id FROM roles r JOIN permissions p ON p.name IN ('dashboard','rep
 INSERT INTO vehicle_types (name) VALUES ('Truck'),('Van'),('Bus'),('Courier');
 INSERT INTO regions (name) VALUES ('North Zone'),('South Zone'),('East Zone'),('West Zone');
 
-INSERT INTO users (full_name,email,password_hash,role,status) VALUES
-('System Administrator','admin@transitops.com','$2y$10$R2zno5xrOMP.pvAV5U/JMeR0Iqo4ABoEWyrkDTVxatoGJexbzHi46','admin','Active');
+INSERT INTO users (full_name,email,password_hash,role,status,approval_status,is_active) VALUES
+('System Administrator','admin@transitops.com','$2y$10$XjX.6rqqp40XGFUYYSgw5.v1WeRsJxp2giZmUn8d3zSL/j79XsTY6','admin','Active','Approved',1);
 
 INSERT INTO settings (key_name, value_text) VALUES
 ('company_name','TransitOps'),
@@ -352,7 +352,7 @@ INSERT INTO email_templates (name, subject, body) VALUES
 -- Enterprise extensions. These retain the original application-facing columns
 -- while adding the operational, audit and reporting model required by TransitOps.
 ALTER TABLE roles ADD COLUMN uuid CHAR(36) NULL UNIQUE AFTER id, ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'Active', ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ADD COLUMN deleted_at TIMESTAMP NULL;
-ALTER TABLE users ADD COLUMN uuid CHAR(36) NULL UNIQUE AFTER id, ADD COLUMN first_name VARCHAR(75) NULL, ADD COLUMN last_name VARCHAR(75) NULL, ADD COLUMN phone VARCHAR(25) NULL, ADD COLUMN avatar_path VARCHAR(255) NULL, ADD COLUMN address TEXT NULL, ADD COLUMN remember_token CHAR(64) NULL, ADD COLUMN deleted_at TIMESTAMP NULL, ADD COLUMN created_by INT UNSIGNED NULL, ADD COLUMN updated_by INT UNSIGNED NULL;
+ALTER TABLE users ADD COLUMN created_by INT UNSIGNED NULL, ADD COLUMN updated_by INT UNSIGNED NULL;
 ALTER TABLE regions ADD COLUMN uuid CHAR(36) NULL UNIQUE AFTER id, ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'Active', ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ADD COLUMN deleted_at TIMESTAMP NULL;
 ALTER TABLE vehicle_types ADD COLUMN uuid CHAR(36) NULL UNIQUE AFTER id, ADD COLUMN status VARCHAR(20) NOT NULL DEFAULT 'Active', ADD COLUMN updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, ADD COLUMN deleted_at TIMESTAMP NULL;
 ALTER TABLE vehicles ADD COLUMN uuid CHAR(36) NULL UNIQUE AFTER id, ADD COLUMN vehicle_name VARCHAR(150) NULL, ADD COLUMN manufacturer VARCHAR(100) NULL, ADD COLUMN fuel_type VARCHAR(30) NOT NULL DEFAULT 'Diesel', ADD COLUMN engine_number VARCHAR(100) NULL UNIQUE, ADD COLUMN chassis_number VARCHAR(100) NULL UNIQUE, ADD COLUMN odometer_km DECIMAL(12,2) NOT NULL DEFAULT 0, ADD COLUMN purchase_date DATE NULL, ADD COLUMN insurance_number VARCHAR(100) NULL, ADD COLUMN insurance_expiry DATE NULL, ADD COLUMN fitness_expiry DATE NULL, ADD COLUMN permit_expiry DATE NULL, ADD COLUMN pollution_expiry DATE NULL, ADD COLUMN photo_path VARCHAR(255) NULL, ADD COLUMN remarks TEXT NULL, ADD COLUMN deleted_at TIMESTAMP NULL, ADD COLUMN created_by INT UNSIGNED NULL, ADD COLUMN updated_by INT UNSIGNED NULL, ADD CONSTRAINT chk_vehicle_capacity CHECK (capacity_kg > 0), ADD CONSTRAINT chk_vehicle_cost CHECK (purchase_cost >= 0);
@@ -398,11 +398,11 @@ INSERT INTO permissions (name) VALUES ('roles'),('profile'),('activity_logs'),('
 INSERT INTO expense_categories (uuid,name,description) VALUES (UUID(),'Toll','Road tolls'),(UUID(),'Parking','Parking charges'),(UUID(),'Meals','Driver meals'),(UUID(),'Repair','Unplanned repair'),(UUID(),'Insurance','Insurance premium');
 INSERT INTO fuel_stations (uuid,name,city,contact_phone) VALUES (UUID(),'Northway Fuel Hub','Ahmedabad','+91 9876543210'),(UUID(),'Highway Energy Point','Vadodara','+91 9876543211'),(UUID(),'Westline Fuels','Surat','+91 9876543212');
 INSERT INTO company (uuid,name,email,phone,address) VALUES (UUID(),'TransitOps Logistics','hello@transitops.com','+91 9876543210','Ahmedabad, Gujarat, India');
-INSERT INTO users (uuid,first_name,last_name,full_name,email,password_hash,role,status,phone) VALUES
-(UUID(),'Fleet','Manager','Fleet Manager','manager@transitops.com','$2y$10$R2zno5xrOMP.pvAV5U/JMeR0Iqo4ABoEWyrkDTVxatoGJexbzHi46','fleet_manager','Active','+91 9000000001'),
-(UUID(),'Dispatch','Operator','Dispatch Operator','dispatcher@transitops.com','$2y$10$R2zno5xrOMP.pvAV5U/JMeR0Iqo4ABoEWyrkDTVxatoGJexbzHi46','dispatcher','Active','+91 9000000002'),
-(UUID(),'Safety','Officer','Safety Officer','safety@transitops.com','$2y$10$R2zno5xrOMP.pvAV5U/JMeR0Iqo4ABoEWyrkDTVxatoGJexbzHi46','safety_officer','Active','+91 9000000003'),
-(UUID(),'Financial','Analyst','Financial Analyst','finance@transitops.com','$2y$10$R2zno5xrOMP.pvAV5U/JMeR0Iqo4ABoEWyrkDTVxatoGJexbzHi46','financial_analyst','Active','+91 9000000004');
+INSERT INTO users (uuid,first_name,last_name,full_name,email,password_hash,role,status,phone,approval_status,is_active) VALUES
+(UUID(),'Fleet','Manager','Fleet Manager','manager@transitops.com','$2y$10$XjX.6rqqp40XGFUYYSgw5.v1WeRsJxp2giZmUn8d3zSL/j79XsTY6','fleet_manager','Active','+91 9000000001','Approved',1),
+(UUID(),'Dispatch','Operator','Dispatch Operator','dispatcher@transitops.com','$2y$10$XjX.6rqqp40XGFUYYSgw5.v1WeRsJxp2giZmUn8d3zSL/j79XsTY6','dispatcher','Active','+91 9000000002','Approved',1),
+(UUID(),'Safety','Officer','Safety Officer','safety@transitops.com','$2y$10$XjX.6rqqp40XGFUYYSgw5.v1WeRsJxp2giZmUn8d3zSL/j79XsTY6','safety_officer','Active','+91 9000000003','Approved',1),
+(UUID(),'Financial','Analyst','Financial Analyst','finance@transitops.com','$2y$10$XjX.6rqqp40XGFUYYSgw5.v1WeRsJxp2giZmUn8d3zSL/j79XsTY6','financial_analyst','Active','+91 9000000004','Approved',1);
 
 DELIMITER $$
 CREATE TRIGGER trg_trip_before_dispatch BEFORE UPDATE ON trips FOR EACH ROW BEGIN

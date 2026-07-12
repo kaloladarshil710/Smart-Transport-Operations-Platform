@@ -2,8 +2,27 @@
 /** Enterprise driver directory with secure filters, sorting and pagination. */
 declare(strict_types=1);
 require_once __DIR__ . '/../../config/config.php'; require_once ROOT_PATH . '/functions/driver_functions.php'; requireAuth(); enforceModuleAccess('drivers');
-$limit=in_array((int)($_GET['limit'] ?? 10),[10,25,50,100],true)?(int)$_GET['limit']:10;$page=max(1,(int)($_GET['page']??1));$offset=($page-1)*$limit;$q=trim((string)($_GET['q']??''));$status=trim((string)($_GET['status']??''));$sort=(string)($_GET['sort']??'newest');$order=['newest'=>'d.id DESC','oldest'=>'d.id ASC','name'=>'d.full_name ASC','safety'=>'d.safety_score DESC','experience'=>'d.experience_years DESC','license'=>'d.license_expiry ASC'][$sort] ?? 'd.id DESC';
-$where=['d.deleted_at IS NULL'];$params=[];if($q!==''){$where[]='(d.full_name LIKE ? OR d.employee_id LIKE ? OR d.license_number LIKE ? OR d.phone LIKE ? OR d.email LIKE ?)';for($i=0;$i<5;$i++)$params[]='%'.$q.'%';}if($status!==''){$where[]='d.status=?';$params[]=$status;}$clause=implode(' AND ',$where);
+$limitInput = filter_input(INPUT_GET, 'limit', FILTER_VALIDATE_INT);
+$limit = in_array($limitInput, [10, 25, 50, 100], true) ? (int) $limitInput : 10;
+$page = max(1, (int) ($_GET['page'] ?? 1));
+$offset = ($page - 1) * $limit;
+$q = trim((string) ($_GET['q'] ?? ''));
+$status = trim((string) ($_GET['status'] ?? ''));
+$sort = (string) ($_GET['sort'] ?? 'newest');
+$order = ['newest' => 'd.id DESC', 'oldest' => 'd.id ASC', 'name' => 'd.full_name ASC', 'safety' => 'd.safety_score DESC', 'experience' => 'd.experience_years DESC', 'license' => 'd.license_expiry ASC'][$sort] ?? 'd.id DESC';
+$where = ['d.deleted_at IS NULL'];
+$params = [];
+if ($q !== '') {
+    $where[] = '(d.full_name LIKE ? OR d.employee_id LIKE ? OR d.license_number LIKE ? OR d.phone LIKE ? OR d.email LIKE ?)';
+    for ($i = 0; $i < 5; $i++) {
+        $params[] = '%' . $q . '%';
+    }
+}
+if ($status !== '') {
+    $where[] = 'd.status=?';
+    $params[] = $status;
+}
+$clause = implode(' AND ', $where);
 $count=getDb()->prepare("SELECT COUNT(*) FROM drivers d WHERE $clause");$count->execute($params);$total=(int)$count->fetchColumn();$statement=getDb()->prepare("SELECT d.*,r.name region_name,(SELECT t.trip_number FROM trips t WHERE t.driver_id=d.id AND t.status='Dispatched' ORDER BY t.id DESC LIMIT 1) current_trip FROM drivers d JOIN regions r ON r.id=d.region_id WHERE $clause ORDER BY $order LIMIT ? OFFSET ?");foreach($params as $i=>$value)$statement->bindValue($i+1,$value);$statement->bindValue(count($params)+1,$limit,PDO::PARAM_INT);$statement->bindValue(count($params)+2,$offset,PDO::PARAM_INT);$statement->execute();$drivers=$statement->fetchAll();$totalPages=max(1,(int)ceil($total/$limit));
 $pageTitle='Drivers';require ROOT_PATH.'/includes/header.php';require ROOT_PATH.'/includes/sidebar.php';
 ?>

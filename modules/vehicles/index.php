@@ -1,7 +1,9 @@
 <?php
+
 /**
  * Vehicle module index.
  */
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/../../config/config.php';
@@ -34,42 +36,96 @@ require_once __DIR__ . '/../../includes/sidebar.php';
             <h1 class="page-title">Vehicle Management</h1>
             <p class="page-subtitle">Track fleet assets, lifecycle state and utilization.</p>
         </div>
-        <a class="btn btn-primary" href="add.php">Add Vehicle</a>
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline" href="<?= e(siteUrl('ajax/vehicle_export.php')); ?>">CSV export</a>
+            <a class="btn btn-primary" href="add.php">Add Vehicle</a>
+        </div>
     </div>
 
-    <div class="card table-card">
-        <div class="table-responsive">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Registration</th>
-                        <th>Make / Model</th>
-                        <th>Type</th>
-                        <th>Region</th>
-                        <th>Status</th>
-                        <th><span class="sr-only">Actions</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($vehicles as $vehicle): ?>
-                    <tr>
-                        <td><a class="trip-link" href="view.php?id=<?php echo (int)$vehicle['id']; ?>"><?php echo e($vehicle['registration_number']); ?></a></td>
-                        <td><?php echo e($vehicle['make'] . ' ' . $vehicle['model']); ?></td>
-                        <td><?php echo e($vehicle['vehicle_type']); ?></td>
-                        <td><?php echo e($vehicle['region']); ?></td>
-                        <td><span class="badge badge-success"><?php echo e($vehicle['status']); ?></span></td>
-                        <td><a class="btn btn-sm btn-outline" href="view.php?id=<?php echo (int)$vehicle['id']; ?>" aria-label="View vehicle"><i class="fa fa-eye"></i></a></td>
-                    </tr>
-                    <?php endforeach; ?>
-                    <?php if (!$vehicles): ?><tr><td colspan="6" class="empty-state">No fleet vehicles yet. Add your first vehicle to begin dispatch operations.</td></tr><?php endif; ?>
-                </tbody>
-            </table>
-        </div>
-        <div class="mt-3">
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a class="btn btn-secondary" href="index.php?page=<?php echo e((string)$i); ?>"><?php echo e((string)$i); ?></a>
-            <?php endfor; ?>
-        </div>
+   <div class="card table-card">
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Registration</th>
+                    <th>Make / Model</th>
+                    <th>Type</th>
+                    <th>Region</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($vehicles as $vehicle): ?>
+                <tr>
+                    <td>
+                        <a class="trip-link" href="view.php?id=<?php echo (int)$vehicle['id']; ?>">
+                            <?php echo e($vehicle['registration_number']); ?>
+                        </a>
+                    </td>
+
+                    <td>
+                        <?php echo e($vehicle['make'] . ' ' . $vehicle['model']); ?>
+                    </td>
+
+                    <td>
+                        <?php echo e($vehicle['vehicle_type']); ?>
+                    </td>
+
+                    <td>
+                        <?php echo e($vehicle['region']); ?>
+                    </td>
+
+                    <td>
+                        <?php
+                        $statusClass = 'badge-success';
+
+                        switch (strtolower($vehicle['status'])) {
+                            case 'maintenance':
+                                $statusClass = 'badge-warning';
+                                break;
+                            case 'inactive':
+                                $statusClass = 'badge-danger';
+                                break;
+                            case 'available':
+                            default:
+                                $statusClass = 'badge-success';
+                                break;
+                        }
+                        ?>
+                        <span class="badge <?php echo $statusClass; ?>">
+                            <?php echo e($vehicle['status']); ?>
+                        </span>
+                    </td>
+
+                    <td>
+                        <a class="btn btn-sm btn-primary"
+                           href="view.php?id=<?php echo (int)$vehicle['id']; ?>">
+                            <i class="fa fa-eye">View</i> 
+                        </a>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+
+                <?php if (!$vehicles): ?>
+                <tr>
+                    <td colspan="6" class="empty-state">
+                        No fleet vehicles yet. Add your first vehicle to begin dispatch operations.
+                    </td>
+                </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
     </div>
+
+    <div class="mt-3">
+        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+            <a class="btn btn-secondary"
+               href="index.php?page=<?php echo $i; ?>">
+                <?php echo $i; ?>
+            </a>
+        <?php endfor; ?>
+    </div>
+</div>
 </div>
 <?php require_once __DIR__ . '/../../includes/footer.php'; ?>

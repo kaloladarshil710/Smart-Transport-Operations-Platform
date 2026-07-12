@@ -445,7 +445,9 @@
 }
 
 .table-responsive {
-    overflow-x: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 72vh;
 }
 
 .table-responsive .table {
@@ -456,13 +458,14 @@
 .table-responsive .table thead th {
     font-size: 11px;
     padding: 10px 14px;
-    white-space: nowrap;
+    white-space: normal;
 }
 
 .table-responsive .table tbody td {
     font-size: 13px;
     padding: 10px 14px;
     vertical-align: middle;
+    white-space: normal;
 }
 
 .trip-link {
