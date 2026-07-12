@@ -1,0 +1,9 @@
+Options -Indexes
+RewriteEngine On
+
+# Keep direct requests for existing files and folders intact.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+RewriteRule ^(.*)$ public/$1 [L]
