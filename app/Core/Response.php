@@ -19,6 +19,11 @@ final class Response
         return new self($body, $status, ['Content-Type' => 'text/html; charset=UTF-8']);
     }
 
+    public static function redirect(string $path, int $status = 302): self
+    {
+        return new self('', $status, ['Location' => $path]);
+    }
+
     /** @param array<string, mixed> $payload */
     public static function json(array $payload, int $status = 200): self
     {

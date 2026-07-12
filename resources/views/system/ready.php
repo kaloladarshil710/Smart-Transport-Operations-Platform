@@ -13,7 +13,8 @@
         <p class="eyebrow">SMART TRANSPORT OPERATIONS PLATFORM</p>
         <h1 id="system-title">TransitOps foundation is ready.</h1>
         <p>The project architecture is installed and ready for the sequential module build.</p>
-        <a class="system-link" href="/health">Check application health</a>
+        <a class="system-link" href="/login">Open platform login</a>
+        <a class="system-link" href="/health" style="margin-left:.5rem">Check application health</a>
     </main>
 </body>
 </html>
