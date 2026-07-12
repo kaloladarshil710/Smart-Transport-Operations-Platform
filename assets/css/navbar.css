@@ -1,0 +1,7 @@
+.topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.topbar-left, .topbar-right { display: flex; align-items: center; gap: 12px; }
+.searchbox { display: flex; align-items: center; gap: 8px; background: var(--card); border: 1px solid var(--border); padding: 10px 14px; border-radius: 999px; min-width: 300px; }
+.searchbox input { border: none; outline: none; background: transparent; width: 100%; }
+.icon-button, .sidebar-toggle { border: none; background: var(--card); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; box-shadow: var(--shadow); }
+.profile-pill { display: flex; align-items: center; gap: 10px; background: var(--card); padding: 8px 12px; border-radius: 999px; }
+.avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--info)); display: grid; place-items: center; color: white; font-weight: 700; }

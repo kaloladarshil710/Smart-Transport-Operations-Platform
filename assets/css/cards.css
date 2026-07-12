@@ -1,0 +1,8 @@
+.dashboard-card { padding: 20px; }
+.table-card { padding: 20px; }
+.list-card { padding: 20px; }
+.badge { display: inline-block; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.badge-success { background: rgba(34,197,85,0.15); color: var(--success); }
+.badge-warning { background: rgba(245,158,11,0.15); color: var(--warning); }
+.badge-danger { background: rgba(239,68,68,0.15); color: var(--danger); }
+.badge-info { background: rgba(6,182,212,0.15); color: var(--info); }

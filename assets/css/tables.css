@@ -1,0 +1,4 @@
+.table-responsive { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td { padding: 14px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+thead th { background: #F8FAFC; font-size: 12px; text-transform: uppercase; letter-spacing: .08em; }

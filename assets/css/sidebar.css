@@ -1,0 +1,6 @@
+.sidebar { width: 280px; background: var(--sidebar); color: #F8FAFC; padding: 24px 16px; }
+.sidebar-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.brand-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(135deg, var(--primary), var(--info)); font-weight: 700; }
+.sidebar-nav { display: flex; flex-direction: column; gap: 6px; }
+.nav-link { padding: 12px 14px; border-radius: 12px; color: #CBD5E1; transition: all .2s ease; }
+.nav-link:hover, .nav-link.active { background: var(--sidebar-hover); color: white; }

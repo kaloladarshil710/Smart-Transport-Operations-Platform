@@ -1,13 +1,11 @@
 <?php
 /**
- * Entry point for TransitOps.
+ * Logout endpoint.
  */
 declare(strict_types=1);
 
 require_once __DIR__ . '/config/config.php';
 
-if (currentUser()) {
-    redirect('dashboard.php');
-}
-
+logoutUser();
+setFlash('success', 'You have been signed out.');
 redirect('login.php');
